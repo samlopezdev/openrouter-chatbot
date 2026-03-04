@@ -1,4 +1,3 @@
-
 export const MODELS = [
     { id: 'mistralai/devstral-2512:free', label: 'Devstral 2', shortLabel: 'Devstral 2'},
     { id: 'nex-agi/deepseek-v3.1-nex-n1:free', label: 'DeepSeek V3.1 Nex N1', shortLabel: 'DeepSeek V3.1'},
