@@ -1,22 +1,77 @@
-import { FaBrain, FaImage, FaTrash, FaPaperPlane, FaRobot, FaTimes } from 'react-icons/fa'
+import React, { ChangeEvent, FormEvent, RefObject } from "react";
+import {
+  FaBrain,
+  FaImage,
+  FaTrash,
+  FaPaperPlane,
+  FaRobot,
+} from "react-icons/fa";
+
+interface PromptFormProps {
+  prompt: string;
+  onPromptChange: (value: string) => void;
+  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
+  onClearAll: () => void;
+  models: Array<{ id: string; name: string }>;
+  selectedModel: { id: string; name: string };
+  onModelChange: (modelId: string) => void;
+  isVisionModel: boolean;
+  onImageChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  imageData?: string;
+  clearImage: () => void;
+  loading: boolean;
+  imageInputRef: RefObject<HTMLInputElement>;
+}
+
+// fallback helpers in case the project doesn't define them elsewhere
+const UploadButton: React.FC<{
+  Icon: React.ComponentType<any>;
+  inputRef: RefObject<HTMLInputElement>;
+  accept: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  title: string;
+  iconClass?: string;
+}> = ({ Icon, inputRef, accept, onChange, title, iconClass }) => (
+  <label title={title} className="cursor-pointer">
+    <Icon className={iconClass} />
+    <input
+      ref={inputRef}
+      type="file"
+      accept={accept}
+      onChange={onChange}
+      className="hidden"
+    />
+  </label>
+);
+
+const Button: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = ({
+  className,
+  children,
+  ...rest
+}) => (
+  <button className={className} {...rest}>
+    {children}
+  </button>
+);
 
 const PromptForm = ({
-    prompt,
-    onPromptChange,
-    onSubmit,
-    onClearAll,
-    models,
-    selectedModel,
-    onModelChange,
-    isVisionModel,
-    onImageChange,
-    imageData,
-    clearImage,
-    loading,
-    imageInputRef
-}) => {
-    const disableSubmit = (!prompt.trim() && !(isVisionModel && imageData) || loading)
-    const disableClear = !prompt.trim() && !imageData
+  prompt,
+  onPromptChange,
+  onSubmit,
+  onClearAll,
+  models,
+  selectedModel,
+  onModelChange,
+  isVisionModel,
+  onImageChange,
+  imageData,
+  clearImage,
+  loading,
+  imageInputRef,
+}: PromptFormProps) => {
+  const disableSubmit =
+    (!prompt.trim() && !(isVisionModel && imageData)) || loading;
+  const disableClear = !prompt.trim() && !imageData;
   return (
     <div className="bg-linear-to-br from-zinc-900/90 to-zinc-900/90 border border-zinc-700/50 rounded-2xl p-4 backdrop-blur-sm shadow-2xl sm:p-6">
       <form onSubmit={onSubmit}>
@@ -24,7 +79,7 @@ const PromptForm = ({
           <textarea
             value={prompt}
             onChange={(e) => onPromptChange(e.target.value)}
-            placeholder="Aske me anything! I can help you build cool stuff"
+            placeholder="Ask me anything! I can help you build cool stuff"
             className="w-full bg-transparent border-none outline-none text-zinc-200 placeholder:text-zinc-500 resize-none text-sm leading-relaxed min-h-15 max-h-27.5 focus:placeholder:bg-zinc-600 transition-colors sm:text-base sm:min-h-20"
             onKeyDown={(e) =>
               e.key === "Enter" && (e.metaKey || e.ctrlKey) && onSubmit(e)
@@ -45,7 +100,7 @@ const PromptForm = ({
 
             {/* Image attachment Preview */}
             {imageData && (
-              <div className="flex item-center gap-2">
+              <div className="flex items-center gap-2">
                 <div className="w-16 h-16 rounded-lg overflow-hidden border border-zinc-700 bg-zinc-900">
                   <img
                     src={imageData}
@@ -66,7 +121,7 @@ const PromptForm = ({
             <div className="flex flex-col justify-between pt-4 border-t border-zinc-700/50 gap-3 sm:flex-row">
               <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
                 <label className="flex items-center gap-2 px-3 py-2 bg-zinc-900/80 border border-zinc-700/50 rounded-xl text-sm text-zinc-200 shadow-inner w-full sm:w-auto">
-                  <FaBrain className="w-3 h-3 text-blue-400 shrink-0 sm:w-4 h-4" />
+                  <FaBrain className="w-3 h-3 text-blue-400 shrink-0 sm:w-4 sm:h-4" />
                   <select
                     value={selectedModel.id}
                     onChange={(e) => onModelChange(e.target.value)}
@@ -101,7 +156,7 @@ const PromptForm = ({
                   type="button"
                   onClick={onClearAll}
                   disabled={disableClear}
-                  className="flex-1 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 disabled:bg-zinc-800 disabled:opacity-50 border border-zinc-70 rounded-xl text-zinc-400 hover:text-zinc-200 transition-all duration-200 disabled:cursor-not-allowed font-medium sm:flex-none sm:px-6"
+                  className="flex-1 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 disabled:bg-zinc-800 disabled:opacity-50 border border-zinc-700 rounded-xl text-zinc-400 hover:text-zinc-200 transition-all duration-200 disabled:cursor-not-allowed font-medium sm:flex-none sm:px-6"
                   title="Clear"
                 >
                   <div className="flex items-center justify-center gap-2">
@@ -121,8 +176,8 @@ const PromptForm = ({
                     </div>
                   ) : (
                     <div className="flex items-center justify-center gap-2">
-                        <FaPaperPlane className='w-4 h-4'/>
-                        <span>Send</span>
+                      <FaPaperPlane className="w-4 h-4" />
+                      <span>Send</span>
                     </div>
                   )}
                 </button>
@@ -133,6 +188,6 @@ const PromptForm = ({
       </form>
     </div>
   );
-}
+};
 
-export default PromptForm
+export default PromptForm;
