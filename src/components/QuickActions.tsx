@@ -22,9 +22,9 @@ const QuickActions = ({ onSelect }) => (
     <div className="text-center">
         <p className="text-zinc-400 text-sm mb-4">Try these examples to get started.</p>
         <div className="flex flex-col justify-center gap-2 sm:flex-wrap sm:gap-3">
-            {QUICK_ACTIONS.map( ({ icon: IconBase, label, prompt}) => <button key={label} onClick={onSelect(prompt)} className="group flex items-center justify-center gap-2 px-4 py-2.5 bg-linear-to-r from-zinc-900/80 to-zinc-800/80 hover:from-zinc-800/80 hover:to-zinc-700/800 border border-zinc-700/50 hover:border-zinc-600/50 rounded-xl text-zinc-300 hover:text-zinc-200 transition-all duration-200 backdrop-blur-sm shadow-lg hover:shadow-xl hover: scale-105 active:scale-95 sm:justify-start">
+            {QUICK_ACTIONS.map( ({ icon, label, prompt}) => <button key={label} onClick={onSelect(prompt)} className="group flex items-center justify-center gap-2 px-4 py-2.5 bg-linear-to-r from-zinc-900/80 to-zinc-800/80 hover:from-zinc-800/80 hover:to-zinc-700/800 border border-zinc-700/50 hover:border-zinc-600/50 rounded-xl text-zinc-300 hover:text-zinc-200 transition-all duration-200 backdrop-blur-sm shadow-lg hover:shadow-xl hover: scale-105 active:scale-95 sm:justify-start">
                 <div className="text-blue-400 group-hover:text-blue-300 transition-colors">
-                    <Icon className="w-4 h-4" />
+                    <icon className="w-4 h-4" />
                 </div>
                 <span className="text-center sm:text-left">{label}</span>
             </button> )}
