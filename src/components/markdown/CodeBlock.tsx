@@ -1,4 +1,4 @@
-import { useState, ReactNode, FC } from "react";
+import { useState, ReactNode} from "react";
 
 interface CodeBlockProps {
     inline?: boolean;
